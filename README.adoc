@@ -1,7 +1,9 @@
 = Demo AquaSec Trivy
 
-== Execução do Script
+== Execução dos comandos
 
-- Gerar o jar com o maven ou gradle
-- Rodar o script passando o jar como parâmetro. Exemplo maven: `sh pom-from-jar.sh target/demo-trivy-0.0.1-SNAPSHOT.jar`
-- Executar o trivy como file system apontando para o caminho do pom gerado. Exemplo: `trivy -d fs pom_from_jar/pom.xml`
+* Gerar o jar com o maven e gradle: `mvn clean package -DskipTests` e `gradle clean build -x test` respectivamente
+* Rodar o comando do trivy apontando para o jar maven: `trivy -d rootfs target/demo-trivy-0.0.1-SNAPSHOT.jar`
+** Não devem ser exibidas vulnerabilidades
+* Rodar o comando do trivy apontando para o jar gradle: `trivy -d rootfs build/libs/demo-trivy-0.0.1-SNAPSHOT.jar`
+** Devem ser exibidas vulnerabilidades pelo uso de uma versão antiga do Spring Boot (2.3.2.RELEASE)
