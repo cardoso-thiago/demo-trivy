@@ -1,0 +1,7 @@
+= Demo AquaSec Trivy
+
+== Execução do Script
+
+- Gerar o jar com o maven ou gradle
+- Rodar o script passando o jar como parâmetro. Exemplo maven: `sh pom-from-jar.sh target/demo-trivy-0.0.1-SNAPSHOT.jar`
+- Executar o trivy como file system apontando para o caminho do pom gerado. Exemplo: `trivy -d fs pom_from_jar/pom.xml`
