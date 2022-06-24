@@ -1,0 +1,6 @@
+FROM aquasec/trivy
+
+COPY pom.xml /pom.xml
+COPY settings.xml /root/.m2/settings.xml
+
+RUN trivy -d fs --security-checks vuln --vuln-type library pom.xml

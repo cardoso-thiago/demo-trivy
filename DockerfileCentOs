@@ -1,0 +1,18 @@
+FROM centos:8
+
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
+
+RUN yum update -y \
+  && yum install -y java-11-openjdk \
+     maven \
+     wget \
+  && yum clean all
+
+RUN wget https://github.com/aquasecurity/trivy/releases/download/v0.29.2/trivy_0.29.2_Linux-64bit.rpm
+RUN rpm -ivh trivy_0.29.2_Linux-64bit.rpm
+
+RUN mvn --version
+COPY pom.xml /pom.xml
+RUN mvn clean package -DskipTests
+RUN trivy -d fs --security-checks vuln --vuln-type library pom.xml
